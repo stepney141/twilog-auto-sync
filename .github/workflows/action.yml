@@ -1,0 +1,35 @@
+name: Twilog Updater
+
+on:
+  workflow_dispatch:
+  # デバッグ用に手動実行を許可
+  schedule:
+    - cron: "0 15 * * *"
+    # 毎日午前0時に起動(JST, UTC+9)
+
+env:
+  LANG: "ja_JP.UTF-8"
+
+jobs:
+  Updater:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Japanese fonts and xvfb
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto xvfb
+        # 文字化けを防ぐ生活の知恵
+        # https://qiita.com/zyyx-matsushita/items/c33f79e33f242395019e
+
+      - name: Run the script
+        shell: bash
+        run: npx tsx ./index.ts
