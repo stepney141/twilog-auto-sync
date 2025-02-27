@@ -14,7 +14,7 @@ stealthPlugin.enabledEvasions.delete("navigator.plugins");
 stealthPlugin.enabledEvasions.delete("media.codecs");
 puppeteer.use(stealthPlugin);
 
-const USERS = ["stepney141", "ewell660"] as const;
+const USERS = ["ewell660"] as const;
 const XPATH = {
   getLatestTweets: '//*[@id="side-update"]/div/div/form/input'
 };
